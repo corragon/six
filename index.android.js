@@ -11,9 +11,17 @@ import {
   Text,
   View
 } from 'react-native';
+import Realm from 'realm';
 
 export default class Six extends Component {
   render() {
+    let realm = new Realm({
+     schema: [{name: 'Dog', properties: {name: 'string'}}]
+    });
+
+    realm.write(() => {
+     realm.create('Dog', {name: 'Rex'});
+    });
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -26,6 +34,7 @@ export default class Six extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
+        <Text style={styles.welcome}>Count of dogs in Realm: {realm.objects('Dog').length}</Text>
       </View>
     );
   }
