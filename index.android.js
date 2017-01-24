@@ -4,16 +4,34 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React,  { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  TouchableHighlight
 } from 'react-native';
 import Realm from 'realm';
+import SortableListView from 'react-native-sortable-listview';
+import Utils from './src/utils';
 
+
+var RowComponent = React.createClass({
+  render: function() {
+    return (
+      <TouchableHighlight
+        underlayColor={'#aaa'}
+        delayLongPress={500} 
+        style={{padding: 25, backgroundColor: "#aae", borderBottomWidth:1, borderColor: '#eee', width: 200}} 
+        {...this.props.sortHandlers}
+      >
+        <Text>{this.props.data.name}</Text>
+      </TouchableHighlight>
+    );
+  }
+});
 
 export default class Six extends Component {
   constructor() {
@@ -33,29 +51,30 @@ export default class Six extends Component {
     
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
         <Button 
           onPress={this.addADog.bind(this)}
           title="Add a thing"
           style={styles.button}
           />
         <Text style={styles.welcome}>Count of dogs in Realm: {this.state.dogs.length}</Text>
+        <Text style={styles.welcome}>{`state.dogs is type ${typeof this.state.dogs}`}</Text>
+        <SortableListView
+          style={{flex: 1}}
+          data={this.state.dogs}
+          onRowMoved={e => {
+            let newOrder = Utils.move(this.state.dogs, e.from, e.to);
+            this.setState({dogs: newOrder});
+
+          }}
+          renderRow={row => <RowComponent data={row} />}
+        />
       </View>
     );
   }
   addADog() {
     let realm = this.realm;
     realm.write(()=>{
-      realm.create('Dog', {name: 'Fido'});
+      realm.create('Dog', {name: new Date().toString()});
     });
     this.setState({dogs: realm.objects('Dog')});
   }
