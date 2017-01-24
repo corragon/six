@@ -9,19 +9,28 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 import Realm from 'realm';
 
+
 export default class Six extends Component {
-  render() {
-    let realm = new Realm({
+  constructor() {
+    super();
+    this.realm = new Realm({
      schema: [{name: 'Dog', properties: {name: 'string'}}]
     });
-
-    realm.write(() => {
-     realm.create('Dog', {name: 'Rex'});
+    this.realm.write(() => {
+     this.realm.deleteAll();
     });
+    this.state = {
+      dogs: this.realm.objects('Dog')
+    }
+  }
+  render() {
+    // let database = new Database();
+    
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -34,9 +43,21 @@ export default class Six extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <Text style={styles.welcome}>Count of dogs in Realm: {realm.objects('Dog').length}</Text>
+        <Button 
+          onPress={this.addADog.bind(this)}
+          title="Add a thing"
+          style={styles.button}
+          />
+        <Text style={styles.welcome}>Count of dogs in Realm: {this.state.dogs.length}</Text>
       </View>
     );
+  }
+  addADog() {
+    let realm = this.realm;
+    realm.write(()=>{
+      realm.create('Dog', {name: 'Fido'});
+    });
+    this.setState({dogs: realm.objects('Dog')});
   }
 }
 
@@ -51,6 +72,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  button: {
+    color: '#841584'
   },
   instructions: {
     textAlign: 'center',
