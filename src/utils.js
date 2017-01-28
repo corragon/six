@@ -13,5 +13,10 @@ export default {
 
   findTodo: function(todo, todoList) {
     return todoList.find((item) => item.title.toLowerCase() === todo.title.toLowerCase());
+  },
+  date: function(date) {
+    date = date || new Date();
+    date.setHours(0,0,0,0);
+    return date;
   }
 }

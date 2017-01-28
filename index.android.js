@@ -13,7 +13,7 @@ import {
   Button,
   TouchableHighlight
 } from 'react-native';
-import Realm from 'realm';
+// import Realm from 'realm';
 import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
 
@@ -36,14 +36,14 @@ var RowComponent = React.createClass({
 export default class Six extends Component {
   constructor() {
     super();
-    this.realm = new Realm({
-     schema: [{name: 'Dog', properties: {name: 'string'}}]
-    });
-    this.realm.write(() => {
-     this.realm.deleteAll();
-    });
+    // this.realm = new Realm({
+    //  schema: [{name: 'Dog', properties: {name: 'string'}}]
+    // });
+    // this.realm.write(() => {
+    //  this.realm.deleteAll();
+    // });
     this.state = {
-      dogs: this.realm.objects('Dog')
+      dogs: [4]//this.realm.objects('Dog')
     }
   }
   render() {
@@ -72,11 +72,11 @@ export default class Six extends Component {
     );
   }
   addADog() {
-    let realm = this.realm;
-    realm.write(()=>{
-      realm.create('Dog', {name: new Date().toString()});
-    });
-    this.setState({dogs: realm.objects('Dog')});
+    // let realm = this.realm;
+    // realm.write(()=>{
+    //   realm.create('Dog', {name: new Date().toString()});
+    // });
+    // this.setState({dogs: realm.objects('Dog')});
   }
 }
 
