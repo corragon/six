@@ -16,6 +16,7 @@ import {
 import Realm from 'realm';
 import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
+import Repository from './src/Repository';
 
 
 var RowComponent = React.createClass({
@@ -47,7 +48,7 @@ export default class Six extends Component {
     }
   }
   render() {
-    // let database = new Database();
+    // let repository = new Repository();
     
     return (
       <View style={styles.container}>

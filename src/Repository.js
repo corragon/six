@@ -20,15 +20,20 @@ import TaskModel from './TaskModel';
     }
   };
 
-export default class Database {
+export default class Repository {
 
   constructor() {
     this.realm = new Realm({
      schema: [TaskSchema, DaySchema]
     });
+    init();
   }
 
   init() {
+    mockData();
+  }
+
+  mockData() {
     let realm = this.realm;
 
     realm.write(() => {
@@ -43,7 +48,30 @@ export default class Database {
 
   }
 
+  findAll(sortBy) {
+    if (!sortBy) sortBy = [['completed', false], ['updatedAt', true]];
+    return this.realm.objects('Task').sorted(sortBy);
+  }
 
+  create(day, task) {
+    if (this.realm.objects('Task').filtered(`id = '${task.id}'`).length) return;
+
+    this.realm.write(() => {
+      this.realm.create('Task', task);
+    })
+  }
+
+  updateTask(task, callback) {
+    if (!callback) return;
+    this.realm.write(() => {
+      callback();
+      task.updatedAt = new Date();
+    });
+  }
+
+  updateDay(day) {
+    
+  }
 
     // realm.write(() => {
     //  realm.create('Dog', {name: 'Rex'});
