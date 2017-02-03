@@ -1,5 +1,7 @@
 import Realm from 'realm';
 import TaskModel from './TaskModel';
+import DayModel from './DayModel';
+import {DateOnly} from './util/time';
 
   const TaskSchema = {
     name: 'Task',
@@ -7,7 +9,8 @@ import TaskModel from './TaskModel';
     properties: {
       id: {type: 'string'},
       description: {type: 'string'},
-      completed: {type: 'date', default: null},
+      completed: {type: 'date', default: null, optional: true},
+      dateAdded: {type: 'date', default: DateOnly()},
     }
   };
   const DaySchema = {
@@ -26,31 +29,37 @@ export default class Repository {
     this.realm = new Realm({
      schema: [TaskSchema, DaySchema]
     });
-    init();
+
+    this.init();
   }
 
   init() {
-    mockData();
+    this.mockData();
   }
 
   mockData() {
     let realm = this.realm;
 
+    let newDay = new DayModel([
+      new TaskModel('Workout'),
+      new TaskModel('Call Eric'),
+      new TaskModel('Read GEB'),
+      new TaskModel('Graph Theory'),
+      new TaskModel('Build Ringa'),
+      new TaskModel('Write Ivy Lee app'),
+      ]);
+
     realm.write(() => {
-     realm.create('Task', new TaskModel('Workout'));
-     realm.create('Task', new TaskModel('Call Eric'));
-     realm.create('Task', new TaskModel('Read 30 minutes'));
-     realm.create('Task', new TaskModel('Graph Theory'));
+      realm.create('Day', newDay);
     });
   }
 
-  getTasks(date) {
-
+  getDay(date) {
+    return this.realm.objects('Day').find((day) => {day.date.getTime()===date.getTime()});
   }
 
-  findAll(sortBy) {
-    if (!sortBy) sortBy = [['completed', false], ['updatedAt', true]];
-    return this.realm.objects('Task').sorted(sortBy);
+  get(objectType) {
+    return this.realm.objects(objectType);
   }
 
   create(day, task) {
@@ -61,19 +70,25 @@ export default class Repository {
     })
   }
 
-  updateTask(task, callback) {
-    if (!callback) return;
+  updateTask(task) {
     this.realm.write(() => {
-      callback();
-      task.updatedAt = new Date();
+      task.date = task.date;
     });
   }
 
   updateDay(day) {
-    
+    this.realm.write(() => {
+      day.date = day.date;
+    });
   }
 
-    // realm.write(() => {
-    //  realm.create('Dog', {name: 'Rex'});
-    // });
+  wipe(target) {
+    this.realm.write(() => {
+      if (target) {
+        this.realm.delete(target);
+      } else {
+        this.realm.deleteAll();
+      }
+    });
+  }
 }

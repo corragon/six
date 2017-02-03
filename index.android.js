@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React,  { Component } from 'react';
 import {
   AppRegistry,
@@ -17,6 +11,7 @@ import Realm from 'realm';
 import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
 import Repository from './src/Repository';
+import {DateOnly} from './src/util/time';
 
 
 var RowComponent = React.createClass({
@@ -28,7 +23,7 @@ var RowComponent = React.createClass({
         style={{padding: 25, backgroundColor: "#aae", borderBottomWidth:1, borderColor: '#eee', width: 200}} 
         {...this.props.sortHandlers}
       >
-        <Text>{this.props.data.name}</Text>
+        <Text>{this.props.data.description}</Text>
       </TouchableHighlight>
     );
   }
@@ -37,38 +32,27 @@ var RowComponent = React.createClass({
 export default class Six extends Component {
   constructor() {
     super();
-    this.realm = new Realm({
-     schema: [{name: 'Dog', properties: {name: 'string'}}]
-    });
-    this.realm.write(() => {
-     this.realm.deleteAll();
-    });
+    this.repository = new Repository();
+
     this.state = {
-      dogs: this.realm.objects('Dog')
+      days: this.repository.get('Day'),
+      tasks: this.repository.get('Task')
     }
   }
   render() {
-    // let repository = new Repository();
-    
-    return (
-      <View style={styles.container}>
-        <Button 
+    let button = <Button 
           onPress={this.addADog.bind(this)}
           title="Add a thing"
           style={styles.button}
-          />
-        <Text style={styles.welcome}>Count of dogs in Realm: {this.state.dogs.length}</Text>
-        <Text style={styles.welcome}>{`state.dogs is type ${typeof this.state.dogs}`}</Text>
-        <SortableListView
-          style={{flex: 1}}
-          data={this.state.dogs}
-          onRowMoved={e => {
-            let newOrder = Utils.move(this.state.dogs, e.from, e.to);
-            this.setState({dogs: newOrder});
+          />;
 
-          }}
-          renderRow={row => <RowComponent data={row} />}
-        />
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Whatever</Text>
+        <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
+        <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
+        <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
+        
       </View>
     );
   }
