@@ -29,8 +29,8 @@ export default class Repository {
     this.realm = new Realm({
      schema: [TaskSchema, DaySchema]
     });
-
-    this.init();
+    // this.wipe();
+    // this.init();
   }
 
   init() {
@@ -68,6 +68,12 @@ export default class Repository {
     this.realm.write(() => {
       this.realm.create('Task', task);
     })
+  }
+
+  move(day, fromIndex, toIndex) {
+    this.realm.write(() => {
+      day.tasks.splice(toIndex, 0, day.tasks.splice(fromIndex, 1)[0]);
+    });
   }
 
   updateTask(task) {

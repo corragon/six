@@ -12,6 +12,7 @@ import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
 import Repository from './src/Repository';
 import {DateOnly} from './src/util/time';
+import DayModel from './src/DayModel';
 
 
 var RowComponent = React.createClass({
@@ -19,8 +20,8 @@ var RowComponent = React.createClass({
     return (
       <TouchableHighlight
         underlayColor={'#aaa'}
-        delayLongPress={500} 
-        style={{padding: 25, backgroundColor: "#aae", borderBottomWidth:1, borderColor: '#eee', width: 200}} 
+        delayLongPress={250} 
+        style={{padding: 5, backgroundColor: "#F8F8F8", borderWidth:1, borderColor: '#333', width: 200}} 
         {...this.props.sortHandlers}
       >
         <Text>{this.props.data.description}</Text>
@@ -36,6 +37,7 @@ export default class Six extends Component {
 
     this.state = {
       days: this.repository.get('Day'),
+      currDay: this.repository.get('Day')[0],
       tasks: this.repository.get('Task')
     }
   }
@@ -48,11 +50,21 @@ export default class Six extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Whatever</Text>
+        <Text style={styles.welcome}>Welcome to Six</Text>
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
         <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
         <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
-        
+        <SortableListView
+          style={{flex: 1}}
+          data={this.state.currDay.tasks}
+          onRowMoved={e => {
+            let currDay = this.state.currDay;
+            this.repository.move(currDay, e.from, e.to);
+
+            this.setState({currDay: currDay});
+          }}
+          renderRow={row => <RowComponent data={row} />}
+        />
       </View>
     );
   }
