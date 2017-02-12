@@ -20,11 +20,11 @@ var RowComponent = React.createClass({
     return (
       <TouchableHighlight
         underlayColor={'#aaa'}
-        delayLongPress={250} 
-        style={{padding: 5, backgroundColor: "#F8F8F8", borderWidth:1, borderColor: '#333', width: 200}} 
+        delayLongPress={100}
+        style={{flex: 1, alignSelf: 'stretch', padding: 5, backgroundColor: "#F8F8F8", borderWidth:1, borderColor: '#333', height: 40}}
         {...this.props.sortHandlers}
       >
-        <Text>{this.props.data.description}</Text>
+        <Text style={{fontSize: 24}}>{this.props.data.description}</Text>
       </TouchableHighlight>
     );
   }
@@ -42,7 +42,7 @@ export default class Six extends Component {
     }
   }
   render() {
-    let button = <Button 
+    let button = <Button
           onPress={this.addADog.bind(this)}
           title="Add a thing"
           style={styles.button}
@@ -55,7 +55,8 @@ export default class Six extends Component {
         <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
         <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
         <SortableListView
-          style={{flex: 1}}
+          // style={{flex: 1, alignSelf: 'stretch'}}
+          // contentContainerStyle={{flex: 1, alignItems: 'stretch'}}
           data={this.state.currDay.tasks}
           onRowMoved={e => {
             let currDay = this.state.currDay;
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
