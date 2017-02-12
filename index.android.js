@@ -13,6 +13,7 @@ import Utils from './src/utils';
 import Repository from './src/Repository';
 import {DateOnly} from './src/util/time';
 import DayModel from './src/DayModel';
+import SortableGrid from 'react-native-sortable-grid'
 
 
 var RowComponent = React.createClass({
@@ -41,6 +42,15 @@ export default class Six extends Component {
       tasks: this.repository.get('Task')
     }
   }
+
+  getColor() {
+    let r = this.randomRGB()
+    let g = this.randomRGB()
+    let b = this.randomRGB()
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')'
+  }
+  randomRGB = () => 160 + Math.random()*85
+
   render() {
     let button = <Button
           onPress={this.addADog.bind(this)}
@@ -54,18 +64,28 @@ export default class Six extends Component {
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
         <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
         <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
-        <SortableListView
-          // style={{flex: 1, alignSelf: 'stretch'}}
-          // contentContainerStyle={{flex: 1, alignItems: 'stretch'}}
-          data={this.state.currDay.tasks}
-          onRowMoved={e => {
-            let currDay = this.state.currDay;
-            this.repository.move(currDay, e.from, e.to);
+         <SortableGrid
+           style={{flex: 1, }}
+           blockTransitionDuration      = { 400 }
+           activeBlockCenteringDuration = { 200 }
+           itemsPerRow                  = { 4 }
+           dragActivationTreshold       = { 200 }
+           onDragRelease                = { (itemOrder) => console.log("Drag was released, the blocks are in the following order: ", itemOrder) }
+           onDragStart                  = { ()          => console.log("Some block is being dragged now!") } >
 
-            this.setState({currDay: currDay});
-          }}
-          renderRow={row => <RowComponent data={row} />}
-        />
+           {
+             ['A','B','C','D','E','F'].map( (letter, index) =>
+               <View
+                key={index}
+                style={[styles.block, { backgroundColor: this.getColor() }]}
+                onTap={() => console.log("Item number:", index, "was tapped!") }>
+                 <Text style={{fontSize:50, color:'white'}}>{letter}</Text>
+               </View>
+
+             )
+           }
+
+         </SortableGrid>
       </View>
     );
   }
@@ -97,6 +117,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  block: {
+    flex: 1,
+    margin: 8,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 
