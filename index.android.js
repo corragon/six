@@ -13,7 +13,6 @@ import Utils from './src/utils';
 import Repository from './src/Repository';
 import {DateOnly} from './src/util/time';
 import DayModel from './src/DayModel';
-import SortableGrid from 'react-native-sortable-grid'
 
 
 var RowComponent = React.createClass({
@@ -64,28 +63,17 @@ export default class Six extends Component {
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
         <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
         <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
-         <SortableGrid
-           style={{flex: 1, }}
-           blockTransitionDuration      = { 400 }
-           activeBlockCenteringDuration = { 200 }
-           itemsPerRow                  = { 4 }
-           dragActivationTreshold       = { 200 }
-           onDragRelease                = { (itemOrder) => console.log("Drag was released, the blocks are in the following order: ", itemOrder) }
-           onDragStart                  = { ()          => console.log("Some block is being dragged now!") } >
+        <SortableListView
+          style={{flex: 1}}
+          data={this.state.currDay.tasks}
+          onRowMoved={e => {
+            let newOrder = Utils.move(this.state.currDay.tasks, e.from, e.to);
 
-           {
-             ['A','B','C','D','E','F'].map( (letter, index) =>
-               <View
-                key={index}
-                style={[styles.block, { backgroundColor: this.getColor() }]}
-                onTap={() => console.log("Item number:", index, "was tapped!") }>
-                 <Text style={{fontSize:50, color:'white'}}>{letter}</Text>
-               </View>
+            this.setState({currDay: this.state.currDay});
 
-             )
-           }
-
-         </SortableGrid>
+          }}
+          renderRow={row => <RowComponent data={row} />}
+        />
       </View>
     );
   }
