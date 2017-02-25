@@ -42,14 +42,6 @@ export default class Six extends Component {
     }
   }
 
-  getColor() {
-    let r = this.randomRGB()
-    let g = this.randomRGB()
-    let b = this.randomRGB()
-    return 'rgb(' + r + ', ' + g + ', ' + b + ')'
-  }
-  randomRGB = () => 160 + Math.random()*85
-
   render() {
     let button = <Button
           onPress={this.addADog.bind(this)}
