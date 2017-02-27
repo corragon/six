@@ -45,11 +45,6 @@ export default class Six extends Component {
   }
 
   render() {
-    let button = <Button
-          onPress={this.addADog.bind(this)}
-          title="Add a thing"
-          style={styles.button}
-          />;
    var _scrollView: ScrollView;
 
     return (
@@ -80,13 +75,6 @@ export default class Six extends Component {
         />
       </View>
     );
-  }
-  addADog() {
-    let realm = this.realm;
-    realm.write(()=>{
-      realm.create('Dog', {name: new Date().toString()});
-    });
-    this.setState({dogs: realm.objects('Dog')});
   }
 }
 
