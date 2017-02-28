@@ -23,6 +23,12 @@ import {DateOnly} from './util/time';
     }
   };
 
+  const mockTaskList = ['Workout', 'Call Eric', 'Read GEB', 'Graph Theory', 
+  'Build Ringa', 'Write app', 'Read 5/3/1', 'Message Kris', 'Email Shawn', 
+  'Read Abstract Algebra', 'Pay bills', 'Message Gabe', 'Plan trip', 'Cook meals', 
+  'Find meal-plans', 'Grocery shopping', 'Clean bedroom', 'Return library books', 
+  'Sell old books', 'Clean kitchen', 'Take out the trash', 'Declutter office'];
+
 export default class Repository {
 
   constructor() {
@@ -41,17 +47,35 @@ export default class Repository {
     let realm = this.realm;
 
     let newDay = new DayModel([
-      new TaskModel('Workout'),
-      new TaskModel('Call Eric'),
-      new TaskModel('Read GEB'),
-      new TaskModel('Graph Theory'),
-      new TaskModel('Build Ringa'),
-      new TaskModel('Write Ivy Lee app'),
+      this.mockTask('Workout'),
+      this.mockTask('Call Eric'),
+      this.mockTask('Read GEB'),
+      this.mockTask('Graph Theory'),
+      this.mockTask('Build Ringa'),
+      this.mockTask('Write Ivy Lee app'),
       ]);
 
     realm.write(() => {
       realm.create('Day', newDay);
+      realm.create('Day', this.mockDay());
+      realm.create('Day', this.mockDay());
     });
+  }
+
+  mockDay() {
+    return new DayModel([
+      this.mockTask(),
+      this.mockTask(),
+      this.mockTask(),
+      this.mockTask(),
+      this.mockTask(),
+      this.mockTask(),
+      ]);
+  }
+
+  mockTask(name) {
+    name = name || mockTaskList[Math.floor(Math.random() * mockTaskList.length)];
+    return new TaskModel(name);
   }
 
   getDay(date) {
