@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -124,9 +123,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   scrollView: {
-    flex: 0,
+    flex: 10,
     backgroundColor: '#6A85B1',
-    height: 50,
+    maxHeight: 64
   },
   horizontalScrollView: {
     height: 50,
@@ -139,8 +138,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   img: {
-    width: 64,
-    height: 64,
+    width: 32,
+    height: 32,
   },
 });
 
