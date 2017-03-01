@@ -45,7 +45,6 @@ export default class Six extends Component {
     }
   }
 
-
   render() {
     var _scrollView: ScrollView;
 
@@ -56,7 +55,7 @@ export default class Six extends Component {
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.scrollView}>
-          {this.state.days.map(createDayBadge)}
+          {this.state.days.map((day, i) => <DayBadge key={i} day={day} />)}
         </ScrollView>
 
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
@@ -78,22 +77,6 @@ export default class Six extends Component {
   }
 }
 
-class Thumb extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  }
-
-  render() {
-    return (
-      <View style={styles.viewButton}>
-        <Image style={styles.img} source={{uri:this.props.uri}} />
-      </View>
-    );
-  }
-}
-
-var createDayBadge = (day, i) => <DayBadge key={i} day={day} />;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,13 +90,6 @@ const styles = StyleSheet.create({
   },
   button: {
     color: '#841584'
-  },
-  viewButton: {
-    margin: 7,
-    padding: 5,
-    alignItems: 'center',
-    backgroundColor: '#eaeaea',
-    borderRadius: 3,
   },
   instructions: {
     textAlign: 'center',
@@ -135,10 +111,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  img: {
-    width: 32,
-    height: 32,
   },
 });
 
