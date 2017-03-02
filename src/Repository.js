@@ -55,16 +55,24 @@ export default class Repository {
       this.mockTask('Write Ivy Lee app'),
       ]);
 
+    let day1 = new Date('2017/04/02');
+    let day2 = new Date('2017/04/03');
+    let day3 = new Date('2017/04/04');
+    let day4 = new Date('2017/04/05');
+    let day5 = new Date('2017/04/06');
+
+
     realm.write(() => {
-      realm.create('Day', this.mockDay());
-      realm.create('Day', this.mockDay());
-      realm.create('Day', newDay);
-      realm.create('Day', this.mockDay());
-      realm.create('Day', this.mockDay());
+      realm.create('Day', this.mockDay(day1));
+      realm.create('Day', this.mockDay(day2));
+      realm.create('Day', this.mockDay(day3));
+      realm.create('Day', this.mockDay(day4));
+      realm.create('Day', this.mockDay(day5));
     });
   }
 
-  mockDay() {
+  mockDay(day) {
+    day = day || DateOnly();
     return new DayModel([
       this.mockTask(),
       this.mockTask(),
@@ -72,7 +80,7 @@ export default class Repository {
       this.mockTask(),
       this.mockTask(),
       this.mockTask(),
-      ]);
+      ], day);
   }
 
   mockTask(name) {
