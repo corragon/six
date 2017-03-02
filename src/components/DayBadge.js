@@ -32,10 +32,13 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     backgroundColor: '#6AB185',
-    borderRadius: 20,
+    borderRadius: 32,
+    width: 64,
+    height: 64
   },
   text: {
     color: 'white',
+    fontSize: 42,
     fontWeight: '500'
   }
 });
