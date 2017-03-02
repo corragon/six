@@ -55,7 +55,7 @@ export default class Six extends Component {
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.scrollView}>
-          {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay}/>)}
+          {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay.bind(this, i)}/>)}
         </ScrollView>
 
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
@@ -75,9 +75,9 @@ export default class Six extends Component {
       </View>
     );
   }
-  setCurrentDay(day) {
-    setState({
-      currDay: day
+  setCurrentDay(ix) {
+    this.setState({
+      currDay: this.repository.get('Day')[ix]
     });
   }
 }
