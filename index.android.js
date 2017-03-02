@@ -55,7 +55,7 @@ export default class Six extends Component {
           automaticallyAdjustContentInsets={false}
           horizontal={true}
           style={styles.scrollView}>
-          {this.state.days.map((day, i) => <DayBadge key={i} day={day} />)}
+          {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay}/>)}
         </ScrollView>
 
         <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
@@ -74,6 +74,11 @@ export default class Six extends Component {
         />
       </View>
     );
+  }
+  setCurrentDay(day) {
+    setState({
+      currDay: day
+    });
   }
 }
 

@@ -15,10 +15,14 @@ export default class DayBadge extends React.Component {
 
   render() {
     return (
-      <View style={styles.viewButton}>
+      <TouchableHighlight style={styles.viewButton} onPress={(e) => this._onPressButton}>
         <Text style={styles.text}>{this.props.day.date.getDate()}</Text>
-      </View>
+      </TouchableHighlight>
     );
+  }
+
+  _onPressButton() {
+    this.props.setDay(this.props.day);
   }
 }
 

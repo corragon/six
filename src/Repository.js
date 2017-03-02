@@ -56,6 +56,8 @@ export default class Repository {
       ]);
 
     realm.write(() => {
+      realm.create('Day', this.mockDay());
+      realm.create('Day', this.mockDay());
       realm.create('Day', newDay);
       realm.create('Day', this.mockDay());
       realm.create('Day', this.mockDay());
