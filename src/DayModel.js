@@ -3,9 +3,9 @@ import {DateOnly} from './util/time';
 import TaskModel from './TaskModel';
 
 export default class DayModel {
-	constructor(tasks, id = Utils.guid(), date = DateOnly()) {
+	constructor(tasks, date = DateOnly(), id = Utils.guid()) {
     this.tasks = tasks;
-    this.id = id;
     this.date = date;
+    this.id = id;
   }
 }
