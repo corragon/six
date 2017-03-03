@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
   scrollView: {
     marginTop: 20,
     flex: 10,
-    backgroundColor: '#6A85B1',
-    maxHeight: 96
+    maxHeight: 128
   },
   horizontalScrollView: {
     height: 50,

@@ -7,6 +7,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+const DAY_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 export default class DayBadge extends React.Component {
   constructor() {
     super();
@@ -15,26 +17,38 @@ export default class DayBadge extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight style={styles.viewButton} onPress={this.props.setDay}>
-        <Text style={styles.text}>{this.props.day.date.getDate()}</Text>
-      </TouchableHighlight>
+      <View style={styles.wrapper}>
+        <Text style={styles.dayOfWeek}>{DAY_OF_WEEK[this.props.day.date.getDay()]}</Text>
+        <TouchableHighlight style={styles.backgroundCircle} onPress={this.props.setDay}>
+          <Text style={styles.digit}>{this.props.day.date.getDate()}</Text>
+        </TouchableHighlight>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  viewButton: {
-    margin: 7,
+  wrapper: {
+  },
+  backgroundCircle: {
+    marginHorizontal: 8,
+    marginVertical: 2,
     padding: 5,
     alignItems: 'center',
-    backgroundColor: '#6AB185',
+    backgroundColor: '#6A85B1',
     borderRadius: 32,
-    width: 64,
-    height: 64
+    width: 56,
+    height: 56
   },
-  text: {
+  dayOfWeek: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: '400',
+    alignSelf: 'center'
+  },
+  digit: {
     color: 'white',
-    fontSize: 42,
+    fontSize: 36,
     fontWeight: '500'
   }
 });
