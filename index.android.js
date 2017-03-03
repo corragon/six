@@ -58,7 +58,7 @@ export default class Six extends Component {
           {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay.bind(this, i)}/>)}
         </ScrollView>
 
-        <Text style={styles.welcome}>Day: {this.state.days.length}</Text>
+        <Text style={styles.welcome}>Day: {this.state.currDay.date.toDateString()}</Text>
         <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
         <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
         <SortableListView

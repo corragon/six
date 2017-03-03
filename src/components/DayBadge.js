@@ -29,6 +29,7 @@ export default class DayBadge extends React.Component {
 
 const styles = StyleSheet.create({
   wrapper: {
+    alignItems: 'stretch'
   },
   backgroundCircle: {
     marginHorizontal: 8,
@@ -42,9 +43,10 @@ const styles = StyleSheet.create({
   },
   dayOfWeek: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '400',
-    alignSelf: 'center'
+    textAlign: 'center',
+    alignSelf: 'stretch'
   },
   digit: {
     color: 'white',
