@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#6A85B1',
     marginHorizontal: 5,
+    width: 22,
   },
   itemText: {
     fontSize: 24,
