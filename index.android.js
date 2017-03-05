@@ -17,6 +17,7 @@ import {DateOnly} from './src/util/time';
 import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 
+import Icon from 'react-native-vector-icons/Ionicons';
 
 var RowComponent = React.createClass({
   render: function() {
@@ -24,10 +25,13 @@ var RowComponent = React.createClass({
       <TouchableHighlight
         underlayColor={'#aaa'}
         delayLongPress={100}
-        style={{flex: 1, alignSelf: 'stretch', padding: 5, backgroundColor: "#F8F8F8", borderWidth:1, borderColor: '#333', height: 40}}
+        style={styles.itemWrapper}
         {...this.props.sortHandlers}
       >
-        <Text style={{fontSize: 24}}>{this.props.data.description}</Text>
+      <View style={styles.item}>
+        <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
+        <Text style={styles.itemText}>{this.props.data.description}</Text>
+      </View>
       </TouchableHighlight>
     );
   }
@@ -116,6 +120,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  itemWrapper: {
+    flex: 1,
+    alignSelf: 'stretch',
+    paddingVertical: 5,
+    height: 40,
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemIcon: {
+    fontSize: 30,
+    color: '#6A85B1',
+    marginHorizontal: 5,
+  },
+  itemText: {
+    fontSize: 24,
+  }
 });
 
 AppRegistry.registerComponent('Six', () => Six);
