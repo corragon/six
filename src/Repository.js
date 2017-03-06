@@ -1,4 +1,6 @@
 import Realm from 'realm';
+import moment from 'moment';
+
 import TaskModel from './TaskModel';
 import DayModel from './DayModel';
 import {DateOnly} from './util/time';
@@ -55,19 +57,15 @@ export default class Repository {
       this.mockTask('Write Ivy Lee app'),
       ]);
 
-    let day1 = new Date('2017/04/02');
-    let day2 = new Date('2017/04/03');
-    let day3 = new Date('2017/04/04');
-    let day4 = new Date('2017/04/05');
-    let day5 = new Date('2017/04/06');
-
+    let day = moment('2017-04-08');
 
     realm.write(() => {
-      realm.create('Day', this.mockDay(day1));
-      realm.create('Day', this.mockDay(day2));
-      realm.create('Day', this.mockDay(day3));
-      realm.create('Day', this.mockDay(day4));
-      realm.create('Day', this.mockDay(day5));
+      realm.create('Day', this.mockDay(day.toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
     });
   }
 
