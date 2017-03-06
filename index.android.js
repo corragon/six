@@ -63,16 +63,11 @@ export default class Six extends Component {
         </ScrollView>
 
         <Text style={styles.welcome}>Day: {this.state.currDay.date.toDateString()}</Text>
-        <Text style={styles.welcome}>Day tasks: {this.state.days[0].tasks.length}</Text>
-        <Text style={styles.welcome}>Tasks: {this.state.tasks.length}</Text>
         <SortableListView
           style={{flex: 3}}
           data={this.state.currDay.tasks}
           onRowMoved={e => {
-            let newOrder = Utils.move(this.state.currDay.tasks, e.from, e.to);
-
-            this.setState({currDay: this.state.currDay});
-
+            this.repository.move(this.state.currDay, e.from, e.to);
           }}
           renderRow={row => <RowComponent data={row} />}
         />
