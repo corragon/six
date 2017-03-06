@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 24,
+    flex: 1,
   }
 });
 
