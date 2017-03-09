@@ -18,9 +18,12 @@ import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
 var RowComponent = React.createClass({
   render: function() {
+    let task = this.props.data;
+
     return (
       <TouchableHighlight
         underlayColor={'#aaa'}
@@ -29,8 +32,11 @@ var RowComponent = React.createClass({
         {...this.props.sortHandlers}
       >
       <View style={styles.item}>
+        {task.completed ? 
+        <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
         <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
-        <Text style={styles.itemText}>{this.props.data.description}</Text>
+        }
+        <Text style={styles.itemText}>{task.description}</Text>
       </View>
       </TouchableHighlight>
     );
