@@ -17,8 +17,12 @@ import {DateOnly} from './src/util/time';
 import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 
+import SixBus from './src/global/SixBus';
+import SixController from './src/global/SixController';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+
 
 var RowComponent = React.createClass({
   render: function() {
@@ -31,13 +35,13 @@ var RowComponent = React.createClass({
         style={styles.itemWrapper}
         {...this.props.sortHandlers}
       >
-      <View style={styles.item}>
-        {task.completed ? 
-        <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
-        <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
-        }
-        <Text style={styles.itemText}>{task.description}</Text>
-      </View>
+        <View style={styles.item}>
+          {task.completed ?
+          <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
+          <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
+          }
+          <Text style={styles.itemText}>{task.description}</Text>
+        </View>
       </TouchableHighlight>
     );
   }
@@ -47,6 +51,8 @@ export default class Six extends Component {
   constructor() {
     super();
     this.repository = new Repository();
+    this.bus = new SixBus();
+    this.controller = new SixController(this.bus);
 
     this.state = {
       days: this.repository.get('Day'),
