@@ -52,12 +52,12 @@ export default class Repository {
     let day = moment('2017-04-08');
 
     let newDay = new DayModel([
-      new TaskModel('Workout', true),
-      this.mockTask('Call Eric'),
-      this.mockTask('Read GEB'),
-      this.mockTask('Graph Theory'),
-      this.mockTask('Build Ringa'),
-      this.mockTask('Write Ivy Lee app'),
+      this.mockTask('Workout', true),
+      this.mockTask('Call Eric', false),
+      this.mockTask('Read GEB', true),
+      this.mockTask('Graph Theory', false),
+      this.mockTask('Build Ringa', false),
+      this.mockTask('Write Ivy Lee app', true),
       ], day.toDate());
 
     realm.write(() => {
@@ -82,9 +82,9 @@ export default class Repository {
       ], day);
   }
 
-  mockTask(name) {
+  mockTask(name, completed = Math.random() > 0.5) {
     name = name || mockTaskList[Math.floor(Math.random() * mockTaskList.length)];
-    return new TaskModel(name);
+    return new TaskModel(name, completed);
   }
 
   getDay(date) {
