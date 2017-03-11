@@ -11,7 +11,7 @@ import {DateOnly} from './util/time';
     properties: {
       id: {type: 'string'},
       description: {type: 'string'},
-      completed: {type: 'date', default: null, optional: true},
+      completed: {type: 'bool', default: false, optional: true},
       dateAdded: {type: 'date', default: DateOnly()},
     }
   };
@@ -35,7 +35,8 @@ export default class Repository {
 
   constructor() {
     this.realm = new Realm({
-     schema: [TaskSchema, DaySchema]
+     schema: [TaskSchema, DaySchema],
+     schemaVersion: 1
     });
     // this.wipe();
     // this.init();
@@ -48,19 +49,19 @@ export default class Repository {
   mockData() {
     let realm = this.realm;
 
+    let day = moment('2017-04-08');
+
     let newDay = new DayModel([
-      this.mockTask('Workout'),
+      new TaskModel('Workout', true),
       this.mockTask('Call Eric'),
       this.mockTask('Read GEB'),
       this.mockTask('Graph Theory'),
       this.mockTask('Build Ringa'),
       this.mockTask('Write Ivy Lee app'),
-      ]);
-
-    let day = moment('2017-04-08');
+      ], day.toDate());
 
     realm.write(() => {
-      realm.create('Day', this.mockDay(day.toDate()));
+      realm.create('Day', newDay);
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
