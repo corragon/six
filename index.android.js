@@ -29,28 +29,24 @@ var RowComponent = React.createClass({
     let task = this.props.data;
 
     return (
+      <TouchableHighlight
+        underlayColor={'#F5FCFF'}
+        onPress={() => {
+          this.props.toggle();
+          this.forceUpdate();
+        }}
+        delayLongPress={100}
+        style={styles.itemWrapper}
+        {...this.props.sortHandlers}
+      >
       <View style={styles.item}>
-        <TouchableHighlight
-          underlayColor={'#F5FCFF'}
-          onPress={() => {
-            this.props.toggle();
-            this.forceUpdate();
-          }}
-        >
           {task.completed ?
           <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
           <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
           }
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={'#aaa'}
-          delayLongPress={100}
-          style={styles.itemWrapper}
-          {...this.props.sortHandlers}
-        >
           <Text style={styles.itemText}>{task.description}</Text>
-        </TouchableHighlight>
-      </View>
+        </View>
+      </TouchableHighlight>
     );
   }
 });
