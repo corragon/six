@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     paddingVertical: 5,
-    height: 40,
   },
   item: {
     flex: 1,
@@ -147,13 +146,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemIcon: {
-    fontSize: 30,
+    fontSize: 40,
     color: '#6A85B1',
     marginHorizontal: 5,
-    width: 22,
+    width: 30,
   },
   itemText: {
-    fontSize: 24,
+    fontSize: 32,
     flex: 1,
   }
 });
