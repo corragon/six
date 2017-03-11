@@ -29,20 +29,28 @@ var RowComponent = React.createClass({
     let task = this.props.data;
 
     return (
-      <TouchableHighlight
-        underlayColor={'#aaa'}
-        delayLongPress={100}
-        style={styles.itemWrapper}
-        {...this.props.sortHandlers}
-      >
-        <View style={styles.item}>
+      <View style={styles.item}>
+        <TouchableHighlight
+          underlayColor={'#F5FCFF'}
+          onPress={() => {
+            this.props.toggle();
+            this.forceUpdate();
+          }}
+        >
           {task.completed ?
           <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
           <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
           }
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor={'#aaa'}
+          delayLongPress={100}
+          style={styles.itemWrapper}
+          {...this.props.sortHandlers}
+        >
           <Text style={styles.itemText}>{task.description}</Text>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </View>
     );
   }
 });
@@ -81,7 +89,7 @@ export default class Six extends Component {
           onRowMoved={e => {
             this.repository.move(this.state.currDay, e.from, e.to);
           }}
-          renderRow={row => <RowComponent data={row} />}
+          renderRow={row => <RowComponent data={row} toggle={() => this.repository.toggleTaskCompleted(row)} />}
         />
       </View>
     );

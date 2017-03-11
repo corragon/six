@@ -115,6 +115,12 @@ export default class Repository {
     });
   }
 
+  toggleTaskCompleted(task) {
+    this.realm.write(() => {
+      task.completed = !task.completed;
+    });
+  }
+
   updateDay(day) {
     this.realm.write(() => {
       day.date = day.date;
