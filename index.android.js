@@ -224,9 +224,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   editIcon: {
-    fontSize: 40,
-    color: '#6A85B1',
-    marginHorizontal: 5,
+    fontSize: 30,
+    color: '#CCC',
+    marginHorizontal: 10,
     width: 30,
   },
 });
