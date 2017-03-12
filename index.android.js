@@ -35,6 +35,11 @@ export class RowComponent extends Component {
     }
     this.saveDescription = this.saveDescription.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      text: nextProps.data.description
+    });
+  }
   saveDescription() {
     this.props.saveDesc(this.props.data, this.state.text);
     this.setState({editing: false});
