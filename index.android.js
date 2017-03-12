@@ -24,8 +24,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
 
-var RowComponent = React.createClass({
-  render: function() {
+export class RowComponent extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      editing: false,
+    }
+  }
+  render() {
     let task = this.props.data;
 
     return (
@@ -45,11 +52,16 @@ var RowComponent = React.createClass({
           <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
           }
           <Text style={styles.itemText}>{task.description}</Text>
+
+          {this.editing ?
+          <Icon name="md-close" style={styles.editIcon} /> :
+          <Icon name="md-create" style={styles.editIcon} />
+          }
         </View>
       </TouchableHighlight>
     );
   }
-});
+}
 
 export default class Six extends Component {
   constructor() {
@@ -150,7 +162,13 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 32,
     flex: 1,
-  }
+  },
+  editIcon: {
+    fontSize: 40,
+    color: '#6A85B1',
+    marginHorizontal: 5,
+    width: 30,
+  },
 });
 
 AppRegistry.registerComponent('Six', () => Six);
