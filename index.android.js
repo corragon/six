@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#CCC',
     marginHorizontal: 10,
+    marginVertical: 5,
     width: 30,
   },
 });
