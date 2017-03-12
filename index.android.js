@@ -40,9 +40,9 @@ export class RowComponent extends Component {
     return (
       <View style={styles.itemWrapper}>
         {this.state.editing ?
-          <View style={styles.item}>
+          <View style={styles.edit}>
             <TextInput
-              style={styles.itemText}
+              style={styles.editText}
               value={this.text}
               onChangeText={(text) => this.setState({text})} />
             <TouchableHighlight
@@ -55,8 +55,9 @@ export class RowComponent extends Component {
             </TouchableHighlight>
           </View> :
 
-          <View>
+          <View style={styles.item}>
             <TouchableHighlight
+              style={{flex:1}}
               underlayColor={'#F5FCFF'}
               onPress={() => {
                 this.props.toggle();
@@ -65,7 +66,9 @@ export class RowComponent extends Component {
               delayLongPress={100}
               {...this.props.sortHandlers}
             >
-              <View style={styles.item}>
+              <View
+            style={{flex:1, flexDirection: 'row'}}
+              >
                 {task.completed ?
                 <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
                 <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
@@ -74,6 +77,7 @@ export class RowComponent extends Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
+              style={styles.editIconWrapper}
               underlayColor={'#F5FCFF'}
               onPress={() => {
                 this.setState({editing: true});
@@ -188,6 +192,21 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 32,
     flex: 1,
+  },
+  edit: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  editText: {
+    fontSize: 32,
+    flex: 1,
+    maxHeight: 50,
+  },
+  editIconWrapper: {
+    flex:1,
+    maxWidth: 45,
+    paddingHorizontal: 5,
   },
   editIcon: {
     fontSize: 40,
