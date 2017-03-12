@@ -80,9 +80,7 @@ export class RowComponent extends Component {
               delayLongPress={100}
               {...this.props.sortHandlers}
             >
-              <View
-            style={{flex:1, flexDirection: 'row'}}
-              >
+              <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}} >
                 {task.completed ?
                 <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
                 <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
