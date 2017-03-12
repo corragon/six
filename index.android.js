@@ -31,8 +31,13 @@ export class RowComponent extends Component {
 
     this.state = {
       editing: false,
-      text: 'some Text',
+      text: props.data.description,
     }
+    this.saveDescription = this.saveDescription.bind(this);
+  }
+  saveDescription() {
+    this.props.saveDesc(this.props.data, this.state.text);
+    this.setState({editing: false});
   }
   render() {
     let task = this.props.data;
@@ -43,13 +48,16 @@ export class RowComponent extends Component {
           <View style={styles.edit}>
             <TextInput
               style={styles.editText}
-              value={this.text}
+              value={this.state.text}
+              blurOnSubmit={true}
+              autoFocus={true}
+              autoCapitalize={'sentences'}
+              onBlur={this.saveDescription}
+              onEndEditing={this.saveDescription}
               onChangeText={(text) => this.setState({text})} />
             <TouchableHighlight
               underlayColor={'#F5FCFF'}
-              onPress={() => {
-                this.setState({editing: false});
-              }}
+              onPress={this.saveDescription}
             >
               <Icon name="md-close" style={styles.editIcon} />
             </TouchableHighlight>
@@ -127,7 +135,9 @@ export default class Six extends Component {
           onRowMoved={e => {
             this.repository.move(this.state.currDay, e.from, e.to);
           }}
-          renderRow={row => <RowComponent data={row} toggle={() => this.repository.toggleTaskCompleted(row)} />}
+          renderRow={row => <RowComponent data={row}
+                              toggle={() => this.repository.toggleTaskCompleted(row)}
+                              saveDesc={(task, desc) => this.repository.updateTaskDescription(task, desc)} />}
         />
       </View>
     );

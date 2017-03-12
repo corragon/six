@@ -115,6 +115,12 @@ export default class Repository {
     });
   }
 
+  updateTaskDescription(task, description) {
+    this.realm.write(() => {
+      task.description = description;
+    });
+  }
+
   toggleTaskCompleted(task) {
     this.realm.write(() => {
       task.completed = !task.completed;
