@@ -61,6 +61,7 @@ export class RowComponent extends Component {
               onEndEditing={this.saveDescription}
               onChangeText={(text) => this.setState({text})} />
             <TouchableHighlight
+              style={styles.editIconWrapper}
               underlayColor={'#F5FCFF'}
               onPress={this.saveDescription}
             >
