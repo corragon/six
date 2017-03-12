@@ -3,30 +3,19 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  TextInput,
   View,
   ScrollView,
-  Button,
-  Image,
-  TouchableHighlight
 } from 'react-native';
 import Realm from 'realm';
 import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
 import Repository from './src/Repository';
-import {DateOnly} from './src/util/time';
 import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 import TaskListItem from './src/components/TaskListItem';
 
 import SixBus from './src/global/SixBus';
 import SixController from './src/global/SixController';
-
-import Icon from 'react-native-vector-icons/Ionicons';
-import moment from 'moment';
-
-
-
 
 export default class Six extends Component {
   constructor() {
