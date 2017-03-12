@@ -3,6 +3,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
   View,
   ScrollView,
   Button,
@@ -25,40 +26,65 @@ import moment from 'moment';
 
 
 export class RowComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       editing: false,
+      text: 'some Text',
     }
   }
   render() {
     let task = this.props.data;
 
     return (
-      <TouchableHighlight
-        underlayColor={'#F5FCFF'}
-        onPress={() => {
-          this.props.toggle();
-          this.forceUpdate();
-        }}
-        delayLongPress={100}
-        style={styles.itemWrapper}
-        {...this.props.sortHandlers}
-      >
-      <View style={styles.item}>
-          {task.completed ?
-          <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
-          <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
-          }
-          <Text style={styles.itemText}>{task.description}</Text>
+      <View style={styles.itemWrapper}>
+        {this.state.editing ?
+          <View style={styles.item}>
+            <TextInput
+              style={styles.itemText}
+              value={this.text}
+              onChangeText={(text) => this.setState({text})} />
+            <TouchableHighlight
+              underlayColor={'#F5FCFF'}
+              onPress={() => {
+                this.setState({editing: false});
+              }}
+            >
+              <Icon name="md-close" style={styles.editIcon} />
+            </TouchableHighlight>
+          </View> :
 
-          {this.editing ?
-          <Icon name="md-close" style={styles.editIcon} /> :
-          <Icon name="md-create" style={styles.editIcon} />
-          }
-        </View>
-      </TouchableHighlight>
+          <View>
+            <TouchableHighlight
+              underlayColor={'#F5FCFF'}
+              onPress={() => {
+                this.props.toggle();
+                this.forceUpdate();
+              }}
+              delayLongPress={100}
+              {...this.props.sortHandlers}
+            >
+              <View style={styles.item}>
+                {task.completed ?
+                <Icon name="ios-checkmark-circle" style={styles.itemIcon} /> :
+                <Icon name="ios-checkmark-circle-outline" style={styles.itemIcon} />
+                }
+                <Text style={styles.itemText}>{task.description}</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              underlayColor={'#F5FCFF'}
+              onPress={() => {
+                this.setState({editing: true});
+              }}
+            >
+              <Icon name="md-create" style={styles.editIcon} />
+            </TouchableHighlight>
+          </View>
+        }
+
+      </View>
     );
   }
 }
