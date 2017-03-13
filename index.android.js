@@ -1,4 +1,6 @@
 import React,  { Component } from 'react';
+import {attach, depend, dependency, walkReactParents} from 'react-ringa';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -12,6 +14,7 @@ import Utils from './src/utils';
 import Repository from './src/Repository';
 import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
+import Child from './src/components/Child';
 import TaskListItem from './src/components/TaskListItem';
 
 import SixBus from './src/global/SixBus';
@@ -22,7 +25,9 @@ export default class Six extends Component {
     super();
     this.repository = new Repository();
     this.bus = new SixBus();
-    this.controller = new SixController(this.bus);
+
+    attach(this, this.bus);
+    attach(this, new SixController(this.bus));
 
     this.state = {
       days: this.repository.get('Day'),
@@ -43,7 +48,7 @@ export default class Six extends Component {
           style={styles.scrollView}>
           {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay.bind(this, i)}/>)}
         </ScrollView>
-
+        <Child />
         <Text style={styles.welcome}>Day: {this.state.currDay.date.toDateString()}</Text>
         <SortableListView
           style={{flex: 3}}
