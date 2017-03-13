@@ -18,6 +18,7 @@ export default class Child extends React.Component {
     super();
 
     this.testDispatchMethod  = this.testDispatchMethod.bind(this);
+    this.displayMessage  = this.displayMessage.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,10 @@ export default class Child extends React.Component {
     }
   }
 
+  displayMessage() {
+    dispatch(SixController.UPDATE_MESSAGE, {message: 'This is from Child'}, this.state.bus);
+  }
+
   render() {
     let text = '';
     let busName = '';
@@ -52,6 +57,11 @@ export default class Child extends React.Component {
         <Button
           onPress={this.testDispatchMethod}
           title="Fire Event"
+          color="#841584"
+        />
+        <Button
+          onPress={this.displayMessage}
+          title="Update Message"
           color="#841584"
         />
       </View>

@@ -19,6 +19,7 @@ import TaskListItem from './src/components/TaskListItem';
 
 import SixBus from './src/global/SixBus';
 import SixController from './src/global/SixController';
+import SixModel from './src/global/SixModel';
 
 export default class Six extends Component {
   constructor() {
@@ -27,6 +28,8 @@ export default class Six extends Component {
     this.bus = new SixBus();
 
     attach(this, new SixController(), {refName: 'SixBus'});
+
+    depend(this, dependency(SixModel, ['showMessage', 'appMessage']));
 
     this.state = {
       days: this.repository.get('Day'),
@@ -44,6 +47,10 @@ export default class Six extends Component {
 
   render() {
     var _scrollView: ScrollView;
+    let message;
+    if (this.state.showMessage || true) {
+      message = <Text style={styles.welcome}>Blah: {this.state.appMessage}</Text>;
+    }
 
     return (
       <View style={styles.container}>
@@ -56,6 +63,7 @@ export default class Six extends Component {
         </ScrollView>
         <Child />
         <Text style={styles.welcome}>Day: {this.state.currDay.date.toDateString()}</Text>
+        {message}
         <SortableListView
           style={{flex: 3}}
           data={this.state.currDay.tasks}
