@@ -25,16 +25,21 @@ export default class Six extends Component {
     super();
     this.repository = new Repository();
     this.bus = new SixBus();
-    this.controller = new SixController(this.bus);
 
-    // attach(this, this.bus);
-    // attach(this, new SixController(this.bus));
+    attach(this, new SixController(), {refName: 'SixBus'});
 
     this.state = {
       days: this.repository.get('Day'),
       currDay: this.repository.get('Day')[0],
       tasks: this.repository.get('Task')
     }
+  }
+  componentWillMount() {
+    // Hack to workaround react-ringa assuming `refs` holds DOM nodes
+    // Provide our custom bus instead of a DOM node
+    this.refs = {
+      SixBus: this.bus,
+    };
   }
 
   render() {
