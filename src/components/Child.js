@@ -37,6 +37,7 @@ export default class Child extends React.Component {
           onPress={this.displayMessage}
           title="Update Message"
           style={styles.button}
+          color='#6A85B1'
         />
       </View>
     );
