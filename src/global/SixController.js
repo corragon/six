@@ -1,6 +1,7 @@
 import {Controller} from 'ringa';
 import SixBus from './SixBus';
 import SixModel from './SixModel';
+import RepositoryController from './RepositoryController';
 
 
 export default class SixController extends Controller {
