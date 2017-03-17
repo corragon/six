@@ -34,7 +34,6 @@ export default class Six extends Component {
     this.state = {
       days: this.repository.get('Day'),
       currDay: this.repository.get('Day')[0],
-      tasks: this.repository.get('Task')
     }
   }
   componentWillMount() {
