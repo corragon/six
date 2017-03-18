@@ -9,7 +9,7 @@ import {
 
 import {dispatch} from 'ringa';
 import {attach, depend, dependency, walkReactParents} from 'react-ringa';
-import SixController from '../global/SixController';
+import AppController from '../global/AppController';
 
 export default class Child extends React.Component {
   constructor() {
@@ -27,7 +27,7 @@ export default class Child extends React.Component {
   }
 
   displayMessage() {
-    dispatch(SixController.UPDATE_MESSAGE, {message: 'This is from Child'}, this.state.bus);
+    dispatch(AppController.UPDATE_MESSAGE, {message: 'This is from Child'}, this.state.bus);
   }
 
   render() {

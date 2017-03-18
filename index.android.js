@@ -1,5 +1,6 @@
 import React,  { Component } from 'react';
 import {attach, depend, dependency, walkReactParents} from 'react-ringa';
+import {dispatch} from 'ringa';
 
 import {
   AppRegistry,
@@ -18,7 +19,7 @@ import Child from './src/components/Child';
 import TaskListItem from './src/components/TaskListItem';
 
 import SixBus from './src/global/SixBus';
-import SixController from './src/global/SixController';
+import AppController from './src/global/AppController';
 import AppModel from './src/global/AppModel';
 
 export default class Six extends Component {
@@ -27,14 +28,17 @@ export default class Six extends Component {
     this.repository = new Repository();
     this.bus = new SixBus();
 
-    attach(this, new SixController(), {refName: 'SixBus'});
+    attach(this, new AppController(), {refName: 'SixBus'});
 
-    depend(this, dependency(AppModel, ['showMessage', 'appMessage']));
+    depend(this, dependency(AppModel, ['showMessage', 'appMessage', 'currentDay']));
 
     this.state = {
       days: this.repository.get('Day'),
-      currDay: this.repository.get('Day')[0],
     }
+
+    this.setCurrentDay = this.setCurrentDay.bind(this);
+
+
   }
   componentWillMount() {
     // Hack to workaround react-ringa assuming `refs` holds DOM nodes
@@ -51,6 +55,8 @@ export default class Six extends Component {
       message = <Text style={styles.welcome}>Blah: {this.state.appMessage}</Text>;
     }
 
+    let currentDay = this.state.currentDay || this.state.days[0];
+
     return (
       <View style={styles.container}>
         <ScrollView
@@ -61,13 +67,13 @@ export default class Six extends Component {
           {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay.bind(this, i)}/>)}
         </ScrollView>
         <Child />
-        <Text style={styles.welcome}>Day: {this.state.currDay.date.toDateString()}</Text>
         {message}
+        <Text style={styles.welcome}>Day: {currentDay.date.toDateString()}</Text>
         <SortableListView
           style={{flex: 3}}
-          data={this.state.currDay.tasks}
+          data={currentDay.tasks}
           onRowMoved={e => {
-            this.repository.move(this.state.currDay, e.from, e.to);
+            this.repository.move(currentDay, e.from, e.to);
           }}
           renderRow={row => <TaskListItem data={row}
                               toggle={() => this.repository.toggleTaskCompleted(row)}
@@ -77,9 +83,9 @@ export default class Six extends Component {
     );
   }
   setCurrentDay(ix) {
-    this.setState({
-      currDay: this.repository.get('Day')[ix]
-    });
+    dispatch(AppController.SET_CURRENT_DAY,
+      {'selectedDay': this.repository.get('Day')[ix]},
+      this.bus);
   }
 }
 

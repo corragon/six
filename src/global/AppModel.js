@@ -9,6 +9,7 @@ export default class AppModel extends Model {
 
     this.addProperty('showMessage', true);
     this.addProperty('appMessage', 'Defalt message');
+    this.addProperty('currentDay');
 
   }
 

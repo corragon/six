@@ -4,7 +4,7 @@ import AppModel from './AppModel';
 import RepositoryController from './RepositoryController';
 
 
-export default class SixController extends Controller {
+export default class AppController extends Controller {
   constructor(bus) {
     super('AppController', bus);
 
@@ -28,5 +28,11 @@ export default class SixController extends Controller {
       }
       ]);
 
+    // AppController.SET_CURRENT_DAY
+    this.addListener('setCurrentDay', [
+      (appModel, selectedDay) => {
+        appModel.currentDay = selectedDay;
+      }
+      ]);
   }
 }
