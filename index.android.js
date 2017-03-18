@@ -19,7 +19,7 @@ import TaskListItem from './src/components/TaskListItem';
 
 import SixBus from './src/global/SixBus';
 import SixController from './src/global/SixController';
-import SixModel from './src/global/SixModel';
+import AppModel from './src/global/AppModel';
 
 export default class Six extends Component {
   constructor() {
@@ -29,7 +29,7 @@ export default class Six extends Component {
 
     attach(this, new SixController(), {refName: 'SixBus'});
 
-    depend(this, dependency(SixModel, ['showMessage', 'appMessage']));
+    depend(this, dependency(AppModel, ['showMessage', 'appMessage']));
 
     this.state = {
       days: this.repository.get('Day'),

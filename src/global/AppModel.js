@@ -1,6 +1,6 @@
 import {Model} from 'ringa';
 
-export default class SixModel extends Model {
+export default class AppModel extends Model {
   //-----------------------------------
   // Constructor
   //-----------------------------------

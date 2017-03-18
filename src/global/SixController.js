@@ -1,6 +1,6 @@
 import {Controller} from 'ringa';
 import SixBus from './SixBus';
-import SixModel from './SixModel';
+import AppModel from './AppModel';
 import RepositoryController from './RepositoryController';
 
 
@@ -8,23 +8,23 @@ export default class SixController extends Controller {
   constructor(bus) {
     super('AppController', bus);
 
-    this.addModel(new SixModel());
+    this.addModel(new AppModel());
 
     this.addListener('testEvent', [
       () => console.warn('Fired from within Controller')
       ]);
 
     this.addListener('showMessage', [
-      sixModel => sixModel.showMessage = true
+      appModel => appModel.showMessage = true
       ]);
 
     this.addListener('hideMessage', [
-      sixModel => sixModel.showMessage = false
+      appModel => appModel.showMessage = false
       ]);
 
     this.addListener('updateMessage', [
-      (sixModel, message) => {
-        sixModel.appMessage = message;
+      (appModel, message) => {
+        appModel.appMessage = message;
       }
       ]);
 
