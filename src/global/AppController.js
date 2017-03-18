@@ -27,11 +27,37 @@ export default class AppController extends Controller {
       }
       ]);
 
+    //---------------------------------
     // AppController.SET_CURRENT_DAY
+    //---------------------------------
     this.addListener('setCurrentDay', [
-      (appModel, selectedDay) => {
-        appModel.currentDay = selectedDay;
+      (appModel, day) => {
+        appModel.currentDay = day;
       }
       ]);
+
+    //---------------------------------
+    // AppController.SET_DAY_LIST
+    //---------------------------------
+    this.addListener('setDayList', [
+      RepositoryController.GET_DAY_LIST,
+      (appModel, dayList) => {
+        appModel.dayList = dayList;
+      }
+      ]);
+
+    //---------------------------------
+    // AppController.INITIALIZE
+    //---------------------------------
+    /**
+     * This is where the application starts up!
+     */
+    this.addListener('initialize', [
+      AppController.SET_DAY_LIST,
+    ]);
+  }
+
+  busMounted() {
+    this.dispatch('initialize');
   }
 }

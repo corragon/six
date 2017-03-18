@@ -7,23 +7,42 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import {attach, depend, dependency, walkReactParents} from 'react-ringa';
+import {dispatch} from 'ringa';
+
+import AppController from '../global/AppController';
+
+
 const DAY_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default class DayBadge extends React.Component {
   constructor() {
     super();
 
+    this.selectDay = this.selectDay.bind(this);
+  }
+
+  componentDidMount() {
+    let topBus = undefined;
+    walkReactParents(this, (parent) => topBus = parent.bus ? parent.bus : topBus);
+    this.setState({
+      bus: topBus
+    })
   }
 
   render() {
     return (
       <View style={styles.wrapper}>
         <Text style={styles.dayOfWeek}>{DAY_OF_WEEK[this.props.day.date.getDay()]}</Text>
-        <TouchableHighlight style={styles.backgroundCircle} onPress={this.props.setDay}>
+        <TouchableHighlight style={styles.backgroundCircle} onPress={this.selectDay}>
           <Text style={styles.digit}>{this.props.day.date.getDate()}</Text>
         </TouchableHighlight>
       </View>
     );
+  }
+
+  selectDay() {
+    dispatch(AppController.SET_CURRENT_DAY, {day: this.props.day}, this.state.bus);
   }
 }
 

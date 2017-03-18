@@ -17,9 +17,11 @@ import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 import Child from './src/components/Child';
 import TaskListItem from './src/components/TaskListItem';
+import DaySelectionRenderer from './src/components/DaySelectionRenderer';
 
 import AppBus from './src/global/AppBus';
 import AppController from './src/global/AppController';
+import RepositoryController from './src/global/RepositoryController';
 import AppModel from './src/global/AppModel';
 
 export default class Six extends Component {
@@ -28,13 +30,10 @@ export default class Six extends Component {
     this.repository = new Repository();
     this.bus = new AppBus();
 
+    attach(this, new RepositoryController(), {refName: 'AppBus'});
     attach(this, new AppController(), {refName: 'AppBus'});
 
     depend(this, dependency(AppModel, ['showMessage', 'appMessage', 'currentDay']));
-
-    this.state = {
-      days: this.repository.get('Day'),
-    }
 
     this.setCurrentDay = this.setCurrentDay.bind(this);
 
@@ -55,17 +54,11 @@ export default class Six extends Component {
       message = <Text style={styles.welcome}>Blah: {this.state.appMessage}</Text>;
     }
 
-    let currentDay = this.state.currentDay || this.state.days[0];
+    let currentDay = this.state.currentDay || this.repository.get('Day')[0];
 
     return (
       <View style={styles.container}>
-        <ScrollView
-          ref={(scrollView) => { _scrollView = scrollView; }}
-          automaticallyAdjustContentInsets={false}
-          horizontal={true}
-          style={styles.scrollView}>
-          {this.state.days.map((day, i) => <DayBadge key={i} day={day} setDay={this.setCurrentDay.bind(this, i)}/>)}
-        </ScrollView>
+        <DaySelectionRenderer />
         <Child />
         {message}
         <Text style={styles.welcome}>Day: {currentDay.date.toDateString()}</Text>
