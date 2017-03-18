@@ -11,13 +11,15 @@ import {attach, depend, dependency, walkReactParents} from 'react-ringa';
 import {dispatch} from 'ringa';
 
 import AppController from '../global/AppController';
-
+import AppModel from '../global/AppModel';
 
 const DAY_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default class DayBadge extends React.Component {
   constructor() {
     super();
+
+    depend(this, dependency(AppModel, ['currentDay']));
 
     this.selectDay = this.selectDay.bind(this);
   }
@@ -31,10 +33,15 @@ export default class DayBadge extends React.Component {
   }
 
   render() {
+    let circleStyle = styles.unselected;
+    if (this.state.currentDay && (this.state.currentDay.id === this.props.day.id)) {
+      circleStyle = styles.selected;
+    }
+
     return (
       <View style={styles.wrapper}>
         <Text style={styles.dayOfWeek}>{DAY_OF_WEEK[this.props.day.date.getDay()]}</Text>
-        <TouchableHighlight style={styles.backgroundCircle} onPress={this.selectDay}>
+        <TouchableHighlight style={[styles.backgroundCircle, circleStyle]} onPress={this.selectDay}>
           <Text style={styles.digit}>{this.props.day.date.getDate()}</Text>
         </TouchableHighlight>
       </View>
@@ -55,10 +62,15 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     padding: 5,
     alignItems: 'center',
-    backgroundColor: '#6A85B1',
     borderRadius: 32,
     width: 56,
     height: 56
+  },
+  unselected: {
+    backgroundColor: '#6A85B1',
+  },
+  selected: {
+    backgroundColor: '#889DC1',
   },
   dayOfWeek: {
     color: 'black',
