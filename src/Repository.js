@@ -88,7 +88,7 @@ export default class Repository {
   }
 
   getDay(date) {
-    return this.realm.objects('Day').find((day) => {day.date.getTime()===date.getTime()});
+    return this.realm.objects('Day').find((day) => day.date.getTime()===date.getTime());
   }
 
   get(objectType) {

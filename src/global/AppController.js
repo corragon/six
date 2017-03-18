@@ -54,6 +54,10 @@ export default class AppController extends Controller {
      */
     this.addListener('initialize', [
       AppController.SET_DAY_LIST,
+      RepositoryController.GET_TODAY,
+      (appModel, today) => {
+        appModel.currentDay = today;
+      },
     ]);
   }
 
