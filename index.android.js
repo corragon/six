@@ -18,7 +18,7 @@ import DayBadge from './src/components/DayBadge';
 import Child from './src/components/Child';
 import TaskListItem from './src/components/TaskListItem';
 
-import SixBus from './src/global/SixBus';
+import AppBus from './src/global/AppBus';
 import AppController from './src/global/AppController';
 import AppModel from './src/global/AppModel';
 
@@ -26,9 +26,9 @@ export default class Six extends Component {
   constructor() {
     super();
     this.repository = new Repository();
-    this.bus = new SixBus();
+    this.bus = new AppBus();
 
-    attach(this, new AppController(), {refName: 'SixBus'});
+    attach(this, new AppController(), {refName: 'AppBus'});
 
     depend(this, dependency(AppModel, ['showMessage', 'appMessage', 'currentDay']));
 
@@ -44,7 +44,7 @@ export default class Six extends Component {
     // Hack to workaround react-ringa assuming `refs` holds DOM nodes
     // Provide our custom bus instead of a DOM node
     this.refs = {
-      SixBus: this.bus,
+      AppBus: this.bus,
     };
   }
 

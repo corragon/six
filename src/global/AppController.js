@@ -1,5 +1,4 @@
 import {Controller} from 'ringa';
-import SixBus from './SixBus';
 import AppModel from './AppModel';
 import RepositoryController from './RepositoryController';
 
