@@ -101,21 +101,6 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  scrollView: {
-    marginTop: 20,
-    flex: 10,
-    maxHeight: 128
-  },
-  horizontalScrollView: {
-    height: 50,
-  },
-  block: {
-    flex: 1,
-    margin: 8,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
 });
 
 AppRegistry.registerComponent('Six', () => Six);
