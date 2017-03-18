@@ -49,11 +49,7 @@ export default class Six extends Component {
 
   render() {
     var _scrollView: ScrollView;
-    let message;
-    if (this.state.showMessage || true) {
-      message = <Text style={styles.welcome}>Blah: {this.state.appMessage}</Text>;
-    }
-
+    let message = <Text style={styles.welcome}>Blah: {this.state.appMessage}</Text>;
     let currentDay = this.state.currentDay || this.repository.get('Day')[0];
 
     return (
