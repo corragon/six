@@ -47,6 +47,23 @@ export default class AppController extends Controller {
       ]);
 
     //---------------------------------
+    // AppController.TOGGLE_TASK_DONE
+    //---------------------------------
+    this.addListener('toggleTaskDone', [
+      RepositoryController.TOGGLE_TASK_COMPLETED,
+      (appModel) => { appModel.notify('this is a bad idea')},
+      (task) => console.warn(task.description + ': ' + task.completed)
+      ]);
+
+    //---------------------------------
+    // AppController.SAVE_TASK_DESCRIPTION
+    //---------------------------------
+    this.addListener('saveTaskDescription', [
+      RepositoryController.UPDATE_TASK_DESCRIPTION,
+      (appModel) => { appModel.notify('this is a bad idea')},
+      ]);
+
+    //---------------------------------
     // AppController.INITIALIZE
     //---------------------------------
     /**

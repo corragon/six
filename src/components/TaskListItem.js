@@ -7,27 +7,43 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import {attach, depend, dependency, watch, walkReactParents} from 'react-ringa';
+import {dispatch} from 'ringa';
+
+import AppController from '../global/AppController';
+import AppModel from '../global/AppModel';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class TaskListItem extends Component {
   constructor(props) {
     super(props);
 
+    // We will use this after making task items ringa models
+    // watch(this, props.data);
+
     this.state = {
       editing: false,
       text: props.data.description,
     }
     this.saveDescription = this.saveDescription.bind(this);
+    this.toggleTaskDone = this.toggleTaskDone.bind(this);
   }
+
+  componentDidMount() {
+    let topBus = undefined;
+    walkReactParents(this, (parent) => topBus = parent.bus ? parent.bus : topBus);
+    this.setState({
+      bus: topBus
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       text: nextProps.data.description
     });
   }
-  saveDescription() {
-    this.props.saveDesc(this.props.data, this.state.text);
-    this.setState({editing: false});
-  }
+
   render() {
     let task = this.props.data;
 
@@ -57,10 +73,7 @@ export default class TaskListItem extends Component {
             <TouchableHighlight
               style={{flex:1}}
               underlayColor={'#F5FCFF'}
-              onPress={() => {
-                this.props.toggle();
-                this.forceUpdate();
-              }}
+              onPress={this.toggleTaskDone}
               delayLongPress={100}
               {...this.props.sortHandlers}
             >
@@ -86,6 +99,24 @@ export default class TaskListItem extends Component {
 
       </View>
     );
+  }
+
+  saveDescription() {
+    dispatch(AppController.SAVE_TASK_DESCRIPTION, 
+        {
+          task: this.props.data,
+          desc: this.state.text,
+        }, this.state.bus);
+
+    this.setState({editing: false});
+  }
+
+  toggleTaskDone() {
+    dispatch(AppController.TOGGLE_TASK_DONE, {task: this.props.data}, this.state.bus);
+
+    // TODO: A force update is a code smell.
+    // Remove when task model is updated to be a ringa model.
+    this.forceUpdate();
   }
 }
 

@@ -25,12 +25,34 @@ export default class RepositoryController extends Controller {
     //---------------------------------
     this.addListener('getDay', []);
 
+
+    //---------------------------------
     // RepositoryController.GET_DAY_LIST
+    //---------------------------------
     this.addListener('getDayList', [
       ($ringaEvent) => {
         $ringaEvent.detail.dayList = this.repository.get('Day');
       }
       ]);
+
+    //---------------------------------
+    // RepositoryController.TOGGLE_TASK_COMPLETED
+    //---------------------------------
+    this.addListener('toggleTaskCompleted', [
+      (task) => {
+        this.repository.toggleTaskCompleted(task);
+      }
+      ]);
+
+    //---------------------------------
+    // RepositoryController.UPDATE_TASK_DESCRIPTION
+    //---------------------------------
+    this.addListener('updateTaskDescription', [
+      (task, desc) => {
+        this.repository.updateTaskDescription(task, desc);
+      }
+      ]);
+
 
   }
 }

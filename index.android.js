@@ -10,14 +10,13 @@ import {
   ScrollView,
 } from 'react-native';
 import Realm from 'realm';
-import SortableListView from 'react-native-sortable-listview';
 import Utils from './src/utils';
 import Repository from './src/Repository';
 import DayModel from './src/DayModel';
 import DayBadge from './src/components/DayBadge';
 import Child from './src/components/Child';
-import TaskListItem from './src/components/TaskListItem';
 import DaySelectionRenderer from './src/components/DaySelectionRenderer';
+import TaskListRenderer from './src/components/TaskListRenderer';
 
 import AppBus from './src/global/AppBus';
 import AppController from './src/global/AppController';
@@ -58,16 +57,7 @@ export default class Six extends Component {
         <Child />
         {message}
         <Text style={styles.welcome}>Day: {currentDay.date.toDateString()}</Text>
-        <SortableListView
-          style={{flex: 3}}
-          data={currentDay.tasks}
-          onRowMoved={e => {
-            this.repository.move(currentDay, e.from, e.to);
-          }}
-          renderRow={row => <TaskListItem data={row}
-                              toggle={() => this.repository.toggleTaskCompleted(row)}
-                              saveDesc={(task, desc) => this.repository.updateTaskDescription(task, desc)} />}
-        />
+        <TaskListRenderer/>
       </View>
     );
   }
