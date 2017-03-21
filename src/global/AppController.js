@@ -51,7 +51,6 @@ export default class AppController extends Controller {
     //---------------------------------
     this.addListener('toggleTaskDone', [
       RepositoryController.TOGGLE_TASK_COMPLETED,
-      (appModel) => { appModel.notify('this is a bad idea')},
       (task) => console.warn(task.description + ': ' + task.completed)
       ]);
 
@@ -60,7 +59,6 @@ export default class AppController extends Controller {
     //---------------------------------
     this.addListener('saveTaskDescription', [
       RepositoryController.UPDATE_TASK_DESCRIPTION,
-      (appModel) => { appModel.notify('this is a bad idea')},
       ]);
 
     //---------------------------------

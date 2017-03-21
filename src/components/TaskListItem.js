@@ -102,7 +102,7 @@ export default class TaskListItem extends Component {
   }
 
   saveDescription() {
-    dispatch(AppController.SAVE_TASK_DESCRIPTION, 
+    dispatch(AppController.SAVE_TASK_DESCRIPTION,
         {
           task: this.props.data,
           desc: this.state.text,
@@ -113,10 +113,6 @@ export default class TaskListItem extends Component {
 
   toggleTaskDone() {
     dispatch(AppController.TOGGLE_TASK_DONE, {task: this.props.data}, this.state.bus);
-
-    // TODO: A force update is a code smell.
-    // Remove when task model is updated to be a ringa model.
-    this.forceUpdate();
   }
 }
 
