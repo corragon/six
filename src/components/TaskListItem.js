@@ -60,13 +60,6 @@ export default class TaskListItem extends Component {
               onBlur={this.saveDescription}
               onEndEditing={this.saveDescription}
               onChangeText={(text) => this.setState({text})} />
-            <TouchableHighlight
-              style={styles.editIconWrapper}
-              underlayColor={'#F5FCFF'}
-              onPress={this.saveDescription}
-            >
-              <Icon name="md-close" style={styles.editIcon} />
-            </TouchableHighlight>
           </View> :
 
           <View style={styles.item}>
