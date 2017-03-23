@@ -62,7 +62,7 @@ export default class Repository {
 
     realm.write(() => {
       realm.create('Day', newDay);
-      realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
+      realm.create('Day', this.mockDay(day.add(1, 'days').toDate(), [' ',' ',' ',' ',' ',' ']));
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
       realm.create('Day', this.mockDay(day.add(1, 'days').toDate()));
@@ -70,15 +70,15 @@ export default class Repository {
     });
   }
 
-  mockDay(day) {
+  mockDay(day, tasks=[]) {
     day = day || DateOnly();
     return new DayModel([
-      this.mockTask(),
-      this.mockTask(),
-      this.mockTask(),
-      this.mockTask(),
-      this.mockTask(),
-      this.mockTask(),
+      this.mockTask(tasks[0]),
+      this.mockTask(tasks[1]),
+      this.mockTask(tasks[2]),
+      this.mockTask(tasks[3]),
+      this.mockTask(tasks[4]),
+      this.mockTask(tasks[5]),
       ], day);
   }
 
