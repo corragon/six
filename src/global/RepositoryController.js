@@ -14,7 +14,7 @@ export default class RepositoryController extends Controller {
     //---------------------------------
     this.addListener('getToday', [
       ($ringaEvent) => {
-        let day = moment('2017-04-13');
+        let day = moment('2017-04-09');
 
         $ringaEvent.detail.today = this.repository.getDay(day.toDate());
       }
