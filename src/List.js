@@ -7,7 +7,6 @@ class List extends Model {
   /**
    * Build a List.
    *
-   * @param name The name of this list. Not the same as the id! Names can exist more than once in Ringa. Ids cannot.
    * @param values Optional POJO with values to populate into this List.
    */
   constructor(values) {
